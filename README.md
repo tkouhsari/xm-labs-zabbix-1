@@ -10,21 +10,24 @@
 * [zabbix_comm_plan.zip](zabbix_comm_plan.zip) - The Communication Plan that receives Zabbix alerts
 * [zabbix_files.zip](zabbix_files.zip) - Files required by the Integration Agent and Zabbix
 
+**Note**: To download, follow each link above and then click the **Download** button. Do not try to download by right-clicking the links.
+
 # Installation
 
 ## xMatters set up
 ### Add Event Domain
 To add the Event Domain in xMatters:
-1. In xMatters, go to the ****Developer** tab and then select **Event Domains** from the left hand menu.
+1. In xMatters, go to the **Developer** tab and then select **Event Domains** from the left hand menu.
 2. Click on the **applications** link.
 3. Click **Add New** next to INTEGRATION SERVICES.
 4. Enter `Zabbix` as the name and click **Save**.
 
 ### Import the communication plan
 To import the communication plan into xMatters:
-1. In xMatters, go to the **Developer** tab and click **Import Plan**.
-2. Click **Choose File**, and then locate the downloaded communication plan (.zip file).
-3. Click **Import Plan**.
+1. From the xMatters **Developer** tab, select **Communication Plans** from the left hand menu.
+2. Click **Import Plan**.
+3. Click **Choose File**, and then locate the downloaded communication plan (.zip file).
+4. Click **Import Plan**.
 	* Importing the plan will automatically enable it, and enable its forms for web services.
 
 ### Access URL
@@ -48,7 +51,9 @@ To add the Zabbix integration to your Integration Agent:
 	* Set WEB_SERVICE_URL to the URL copied earlier.
 	* Set ZABBIX_API_URL with the correct URL to your Zabbix API.
 4. Edit &lt;IA_HOME&gt;/conf/IAConfig.xml
-    * Add `<path>integrationservices/zabbix/zabbix.xml</path>` under the &lt;service-configs&gt; node.
+    * Add `<path>zabbix/zabbix.xml</path>` under the &lt;service-configs&gt; node.
+5. From &lt;IA_HOME&gt;/bin, execute ``./iadmin.sh reload all``
+    * This loads the new configuration into the Integration Agent.
 
 ## Zabbix Setup
 ### Add xMatters API User
@@ -77,7 +82,7 @@ Media types are used for sending notifications from Zabbix. To create an xMatter
         * `{ALERT.SENDTO}`
         * `{ALERT.SUBJECT}`
         * `{ALERT.MESSAGE}`
-3. Click **Add**.
+3. Click the **Add** button.
 
 <kbd>
 	<img src="images/media_type.png">
@@ -111,10 +116,10 @@ To send to notifications to xMatters groups:
 3. In the **Media** tab, click the **Add** link.
 4. Enter the following:
     * **Type**: xMatters
-    * **Send to**: &lt;the user's xMatters User ID&gt;
+    * **Send to**: &lt;the name of your xMatters group&gt;
     * **When active**: `1-7,00:00-24:00`
     * **Use if severity**: &lt;select the severity levels you want to notify on&gt;
-5. Click **Add**.
+5. Click the **Add** button.
 6. On the **Permissions** tab, enter the following:
     * User Type: &lt;depending on the Groups setting in step 2, set this to Zabbix User or Zabbix Super Admin)
 7. Click **Add**.
@@ -132,7 +137,22 @@ To create an Action that sends a notification via xMatters:
     * **Send only to**: xMatters
     * **Default message**: &lt;uncheck&gt;
     * **Message**: &lt;enter the following in order, one per line&gt;
-``{EVENT.ID} {HOST.CONN1} {HOST.DESCRIPTION1} {HOST.IP1} {HOST.NAME1} {ITEM.DESCRIPTION1} {ITEM.ID1} {ITEM.KEY1} {ITEM.NAME1} {ITEM.VALUE1} {TRIGGER.NAME} {TRIGGER.SEVERITY} {TRIGGER.STATUS} {TRIGGER.URL}``
+```
+{EVENT.ID}
+{HOST.CONN1}
+{HOST.DESCRIPTION1}
+{HOST.IP1}
+{HOST.NAME1}
+{ITEM.DESCRIPTION1}
+{ITEM.ID1}
+{ITEM.KEY1}
+{ITEM.NAME1}
+{ITEM.VALUE1}
+{TRIGGER.NAME}
+{TRIGGER.SEVERITY}
+{TRIGGER.STATUS}
+{TRIGGER.URL}
+```
 5. Click the **Add** link (not the button).
 6. Click the **Add** button.
 
